@@ -808,9 +808,138 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- SHARED KLINIKITA CORE JAVASCRIPT (INLINE / EMBEDDED - NO EXTERNAL JS/CSS) -->
+  <!-- SHARED KLINIKITA CORE JAVASCRIPT (INLINE / EMBEDDED - TAHAP 2 CORE SHARED STATE & AUTH) -->
   <script>
-    // Inisialisasi AOS Animation
+    // =========================================================================
+    // KLINIKITA CORE ENGINE: SHARED STATE & CLIENT-SIDE AUTHENTICATION (TAHAP 2)
+    // =========================================================================
+
+    const KLINIKITA_STORAGE_KEYS = {
+      SESSION: 'klinikita_session',
+      QUEUES: 'klinikita_queues',
+      PATIENTS: 'klinikita_patients',
+      TRANSACTIONS: 'klinikita_transactions'
+    };
+
+    // Data Awal Default (Seed Data untuk Simulasi Cloud Clinic)
+    const DEFAULT_SEED_DATA = {
+      queues: [
+        { no: 'A-018', nama: 'Siti Nurhaliza', poli: 'Poli Umum', dokter: 'dr. Farhan Syahputra', status: 'Sedang Diperiksa', waktu: '09:15', jenis: 'BPJS' },
+        { no: 'A-019', nama: 'Budi Santoso', poli: 'Poli Umum', dokter: 'dr. Farhan Syahputra', status: 'Menunggu', waktu: '09:30', jenis: 'Umum' },
+        { no: 'B-008', nama: 'Mega Utami', poli: 'Poli Gigi', dokter: 'drg. Amanda Kirana, Sp.KG', status: 'Sedang Diperiksa', waktu: '09:20', jenis: 'Asuransi' },
+        { no: 'C-012', nama: 'Muhammad Rizky', poli: 'Poli Anak', dokter: 'dr. Dewi Lestari, Sp.A', status: 'Menunggu', waktu: '09:40', jenis: 'BPJS' },
+        { no: 'D-005', nama: 'Ahmad Fauzi', poli: 'Penyakit Dalam', dokter: 'dr. Rina Marlina, Sp.PD', status: 'Menunggu', waktu: '09:50', jenis: 'Umum' }
+      ],
+      patients: [
+        { id: 'PAT-001', nik: '3171012345670001', nama: 'Siti Nurhaliza', telepon: '081298765432', jk: 'Perempuan', lahir: '1994-05-12', poli: 'Poli Umum', dokter: 'dr. Farhan Syahputra', penjamin: 'BPJS Kesehatan', tanggal: '2026-10-07' },
+        { id: 'PAT-002', nik: '3171012345670002', nama: 'Budi Santoso', telepon: '081311223344', jk: 'Laki-laki', lahir: '1988-11-20', poli: 'Poli Umum', dokter: 'dr. Farhan Syahputra', penjamin: 'Umum/Mandiri', tanggal: '2026-10-07' },
+        { id: 'PAT-003', nik: '3171012345670003', nama: 'Mega Utami', telepon: '081599887766', jk: 'Perempuan', lahir: '1996-03-15', poli: 'Poli Gigi', dokter: 'drg. Amanda Kirana, Sp.KG', penjamin: 'Asuransi Swasta', tanggal: '2026-10-07' },
+        { id: 'PAT-004', nik: '3171012345670004', nama: 'Muhammad Rizky', telepon: '081744556677', jk: 'Laki-laki', lahir: '2018-08-09', poli: 'Poli Anak', dokter: 'dr. Dewi Lestari, Sp.A', penjamin: 'BPJS Kesehatan', tanggal: '2026-10-07' },
+        { id: 'PAT-005', nik: '3171012345670005', nama: 'Ahmad Fauzi', telepon: '081900112233', jk: 'Laki-laki', lahir: '1979-01-25', poli: 'Penyakit Dalam', dokter: 'dr. Rina Marlina, Sp.PD', penjamin: 'Umum/Mandiri', tanggal: '2026-10-07' }
+      ],
+      transactions: [
+        { id: 'REG-2026-0001', tanggal: '2026-10-07 08:15', nama: 'Siti Nurhaliza', poli: 'Poli Umum', dokter: 'dr. Farhan Syahputra', biaya: 275000, status: 'Lunas', metode: 'Tunai' },
+        { id: 'REG-2026-0002', tanggal: '2026-10-07 08:30', nama: 'Budi Santoso', poli: 'Poli Umum', dokter: 'dr. Farhan Syahputra', biaya: 185000, status: 'Klaim BPJS', metode: 'BPJS' },
+        { id: 'REG-2026-0003', tanggal: '2026-10-07 09:00', nama: 'Mega Utami', poli: 'Poli Gigi', dokter: 'drg. Amanda Kirana, Sp.KG', biaya: 525000, status: 'Lunas', metode: 'Asuransi' },
+        { id: 'REG-2026-0004', tanggal: '2026-10-07 09:20', nama: 'Ahmad Fauzi', poli: 'Penyakit Dalam', dokter: 'dr. Rina Marlina, Sp.PD', biaya: 450000, status: 'Belum Bayar', metode: 'Tunai' },
+        { id: 'REG-2026-0005', tanggal: '2026-10-07 09:45', nama: 'Dewi Kartika', poli: 'Poli Anak', dokter: 'dr. Dewi Lestari, Sp.A', biaya: 325000, status: 'Klaim BPJS', metode: 'BPJS' },
+        { id: 'REG-2026-0006', tanggal: '2026-10-07 10:00', nama: 'Rudi Hermawan', poli: 'Poli Umum', dokter: 'dr. Budi Hartono', biaya: 150000, status: 'Lunas', metode: 'Tunai' },
+        { id: 'REG-2026-0007', tanggal: '2026-10-07 10:30', nama: 'Lina Susanti', poli: 'Poli Gigi', dokter: 'drg. Kevin Susanto', biaya: 375000, status: 'Klaim Asuransi', metode: 'Asuransi' },
+        { id: 'REG-2026-0008', tanggal: '2026-10-07 11:00', nama: 'Joko Widodo', poli: 'Penyakit Dalam', dokter: 'dr. Hendra Pratama, Sp.PD', biaya: 625000, status: 'Lunas', metode: 'Tunai' },
+        { id: 'REG-2026-0009', tanggal: '2026-10-07 11:30', nama: 'Putri Handayani', poli: 'Poli Anak', dokter: 'dr. Sari Mulyani, Sp.A', biaya: 280000, status: 'Klaim BPJS', metode: 'BPJS' },
+        { id: 'REG-2026-0010', tanggal: '2026-10-07 12:00', nama: 'Agus Setiawan', poli: 'Poli Umum', dokter: 'dr. Farhan Syahputra', biaya: 195000, status: 'Lunas', metode: 'Tunai' }
+      ]
+    };
+
+    // Shared State API Manager
+    const KlinikitaStore = {
+      // Inisialisasi seluruh store jika belum tersedia di browser
+      init() {
+        if (!localStorage.getItem(KLINIKITA_STORAGE_KEYS.QUEUES)) {
+          localStorage.setItem(KLINIKITA_STORAGE_KEYS.QUEUES, JSON.stringify(DEFAULT_SEED_DATA.queues));
+        }
+        if (!localStorage.getItem(KLINIKITA_STORAGE_KEYS.PATIENTS)) {
+          localStorage.setItem(KLINIKITA_STORAGE_KEYS.PATIENTS, JSON.stringify(DEFAULT_SEED_DATA.patients));
+        }
+        if (!localStorage.getItem(KLINIKITA_STORAGE_KEYS.TRANSACTIONS)) {
+          localStorage.setItem(KLINIKITA_STORAGE_KEYS.TRANSACTIONS, JSON.stringify(DEFAULT_SEED_DATA.transactions));
+        }
+      },
+
+      // Session Methods
+      getSession() {
+        try {
+          const raw = localStorage.getItem(KLINIKITA_STORAGE_KEYS.SESSION);
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          return null;
+        }
+      },
+      setSession(data) {
+        localStorage.setItem(KLINIKITA_STORAGE_KEYS.SESSION, JSON.stringify(data));
+      },
+      clearSession() {
+        localStorage.removeItem(KLINIKITA_STORAGE_KEYS.SESSION);
+      },
+      isAdmin() {
+        const s = this.getSession();
+        return s && s.role === 'admin';
+      },
+      isLoggedIn() {
+        return !!this.getSession();
+      },
+
+      // Queues Methods
+      getQueues() {
+        return JSON.parse(localStorage.getItem(KLINIKITA_STORAGE_KEYS.QUEUES) || '[]');
+      },
+      addQueue(item) {
+        const list = this.getQueues();
+        list.push(item);
+        localStorage.setItem(KLINIKITA_STORAGE_KEYS.QUEUES, JSON.stringify(list));
+        return list;
+      },
+      updateQueueStatus(no, status) {
+        const list = this.getQueues();
+        const found = list.find(q => q.no === no);
+        if (found) {
+          found.status = status;
+          localStorage.setItem(KLINIKITA_STORAGE_KEYS.QUEUES, JSON.stringify(list));
+        }
+        return list;
+      },
+
+      // Patients Methods
+      getPatients() {
+        return JSON.parse(localStorage.getItem(KLINIKITA_STORAGE_KEYS.PATIENTS) || '[]');
+      },
+      addPatient(item) {
+        const list = this.getPatients();
+        list.push(item);
+        localStorage.setItem(KLINIKITA_STORAGE_KEYS.PATIENTS, JSON.stringify(list));
+        return list;
+      },
+
+      // Transactions Methods
+      getTransactions() {
+        return JSON.parse(localStorage.getItem(KLINIKITA_STORAGE_KEYS.TRANSACTIONS) || '[]');
+      },
+      addTransaction(item) {
+        const list = this.getTransactions();
+        list.push(item);
+        localStorage.setItem(KLINIKITA_STORAGE_KEYS.TRANSACTIONS, JSON.stringify(list));
+        return list;
+      },
+
+      // Reset Demo Data
+      resetAll() {
+        localStorage.setItem(KLINIKITA_STORAGE_KEYS.QUEUES, JSON.stringify(DEFAULT_SEED_DATA.queues));
+        localStorage.setItem(KLINIKITA_STORAGE_KEYS.PATIENTS, JSON.stringify(DEFAULT_SEED_DATA.patients));
+        localStorage.setItem(KLINIKITA_STORAGE_KEYS.TRANSACTIONS, JSON.stringify(DEFAULT_SEED_DATA.transactions));
+      }
+    };
+
+    // Inisialisasi saat Halaman Dimuat
     document.addEventListener('DOMContentLoaded', () => {
       AOS.init({ duration: 800, once: true });
       initKlinikitaCore();
@@ -819,28 +948,34 @@
     // Mobile Menu Toggle
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('hidden');
+      if (menu) menu.classList.toggle('hidden');
     }
 
-    // Modal Handlers
+    // Modal Login Handlers
     function openLoginModal() {
-      document.getElementById('login-modal').classList.remove('hidden');
+      const modal = document.getElementById('login-modal');
+      if (modal) modal.classList.remove('hidden');
     }
 
     function closeLoginModal() {
-      document.getElementById('login-modal').classList.add('hidden');
+      const modal = document.getElementById('login-modal');
+      if (modal) modal.classList.add('hidden');
     }
 
+    // Mengisi Form Demo Akun dengan 1 Klik
     function fillDemoCredentials(type) {
+      const userInput = document.getElementById('login-username');
+      const passInput = document.getElementById('login-password');
       if (type === 'admin') {
-        document.getElementById('login-username').value = 'admin@klinikita.id';
-        document.getElementById('login-password').value = 'admin123';
+        if (userInput) userInput.value = 'admin@klinikita.id';
+        if (passInput) passInput.value = 'admin123';
       } else {
-        document.getElementById('login-username').value = 'pasien@klinikita.id';
-        document.getElementById('login-password').value = 'pasien123';
+        if (userInput) userInput.value = 'pasien@klinikita.id';
+        if (passInput) passInput.value = 'pasien123';
       }
     }
 
+    // Aksi Cepat: Isi Akun Admin & Langsung Login
     function fillAndLoginDemoAdmin() {
       fillDemoCredentials('admin');
       openLoginModal();
@@ -849,7 +984,7 @@
       }, 300);
     }
 
-    // Authentication Handlers
+    // Form Submit Handler
     function handleLoginSubmit(e) {
       e.preventDefault();
       const user = document.getElementById('login-username').value.trim();
@@ -857,6 +992,7 @@
       handleDirectLogin(user, pass);
     }
 
+    // Autentikasi Utama Berbasis Role
     function handleDirectLogin(user, pass) {
       if ((user === 'admin@klinikita.id' || user === 'admin') && pass === 'admin123') {
         const sessionData = {
@@ -865,15 +1001,15 @@
           email: 'admin@klinikita.id',
           loginTime: new Date().toISOString()
         };
-        localStorage.setItem('klinikita_session', JSON.stringify(sessionData));
+        KlinikitaStore.setSession(sessionData);
         closeLoginModal();
 
         Swal.fire({
           icon: 'success',
           title: 'Login Berhasil!',
-          text: 'Selamat datang, Administrator. Menu Dashboard & Laporan Data telah aktif.',
+          html: '<p class="text-sm">Selamat datang, <b>Administrator Klinikita</b>.<br>Menu <b>Dashboard</b> dan <b>Laporan Data</b> kini telah aktif di navigasi.</p>',
           confirmButtonColor: '#0284c7',
-          timer: 2000
+          timer: 2200
         }).then(() => {
           updateAuthUI();
         });
@@ -884,28 +1020,30 @@
           email: 'pasien@klinikita.id',
           loginTime: new Date().toISOString()
         };
-        localStorage.setItem('klinikita_session', JSON.stringify(sessionData));
+        KlinikitaStore.setSession(sessionData);
         closeLoginModal();
 
         Swal.fire({
           icon: 'success',
           title: 'Login Pasien Berhasil',
-          text: 'Selamat datang, Ahmad Fauzi. Anda dapat menggunakan layanan pendaftaran & kalkulator biaya.',
-          confirmButtonColor: '#0284c7'
+          html: '<p class="text-sm">Selamat datang, <b>Ahmad Fauzi</b>.<br>Anda dapat melakukan pendaftaran online, kalkulasi biaya, dan cek antrean secara langsung.</p>',
+          confirmButtonColor: '#0284c7',
+          timer: 2200
         }).then(() => {
           updateAuthUI();
         });
       } else {
         Swal.fire({
           icon: 'error',
-          title: 'Login Gagal',
-          text: 'Kredensial tidak valid! Gunakan tombol Demo Admin (admin@klinikita.id / admin123).',
+          title: 'Kredensial Tidak Valid',
+          text: 'Silakan gunakan tombol akun demo (Admin: admin@klinikita.id / admin123).',
           confirmButtonColor: '#ef4444'
         });
       }
     }
 
-    function handleLogout() {
+    // Logout Handler
+    function handleLogout(redirectHome = false) {
       Swal.fire({
         title: 'Konfirmasi Keluar',
         text: 'Apakah Anda yakin ingin logout dari sistem Klinikita?',
@@ -917,23 +1055,32 @@
         cancelButtonText: 'Batal'
       }).then((result) => {
         if (result.isConfirmed) {
-          localStorage.removeItem('klinikita_session');
+          KlinikitaStore.clearSession();
           Swal.fire({
             icon: 'info',
             title: 'Telah Logout',
-            text: 'Sesi telah berakhir. Menu admin disembunyikan.',
+            text: 'Sesi berakhir. Menu khusus admin disembunyikan.',
             timer: 1500,
             showConfirmButton: false
           });
           updateAuthUI();
+          if (redirectHome) {
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 500);
+          }
         }
       });
     }
 
-    // Update UI based on Authentication Status
+    // Helper Status Auth Cepat
+    function checkAuthStatus() {
+      return KlinikitaStore.getSession();
+    }
+
+    // Sinkronisasi Tampilan UI Navigasi Sesuai Role
     function updateAuthUI() {
-      const sessionRaw = localStorage.getItem('klinikita_session');
-      const session = sessionRaw ? JSON.parse(sessionRaw) : null;
+      const session = KlinikitaStore.getSession();
       
       const adminNavLinks = document.getElementById('admin-nav-links');
       const mobileAdminLinks = document.getElementById('mobile-admin-links');
@@ -941,7 +1088,7 @@
       const mobileAuthContainer = document.getElementById('mobile-auth-container');
 
       if (session && session.role === 'admin') {
-        // Tampilkan link menu admin
+        // Tampilkan menu admin (Desktop & Mobile)
         if (adminNavLinks) {
           adminNavLinks.classList.remove('hidden');
           adminNavLinks.classList.add('flex');
@@ -950,7 +1097,7 @@
           mobileAdminLinks.classList.remove('hidden');
         }
 
-        // Ubah tombol di header menjadi Info User & Logout
+        // Tampilkan info badge admin + tombol logout
         if (authBtnContainer) {
           authBtnContainer.innerHTML = `
             <div class="flex items-center gap-2">
@@ -972,7 +1119,7 @@
           `;
         }
       } else if (session && session.role === 'pasien') {
-        // Pasien login biasa (tidak melihat menu admin)
+        // Pasien login biasa (menu admin tetap tersembunyi)
         if (adminNavLinks) adminNavLinks.classList.add('hidden');
         if (mobileAdminLinks) mobileAdminLinks.classList.add('hidden');
 
@@ -997,7 +1144,7 @@
           `;
         }
       } else {
-        // Belum Login (Guest)
+        // Belum Login (Tamu / Guest)
         if (adminNavLinks) adminNavLinks.classList.add('hidden');
         if (mobileAdminLinks) mobileAdminLinks.classList.add('hidden');
 
@@ -1019,26 +1166,20 @@
       }
     }
 
-    // Core Initialization
+    // Inisialisasi Inti Sistem Klinikita
     function initKlinikitaCore() {
-      // Inisialisasi storage default jika belum ada
-      if (!localStorage.getItem('klinikita_queues')) {
-        const defaultQueues = [
-          { no: 'A-018', nama: 'Siti Nurhaliza', poli: 'Poli Umum', dokter: 'dr. Farhan Syahputra', status: 'Sedang Diperiksa', waktu: '09:15' },
-          { no: 'A-019', nama: 'Budi Santoso', poli: 'Poli Umum', dokter: 'dr. Farhan Syahputra', status: 'Menunggu', waktu: '09:30' },
-          { no: 'B-008', nama: 'Mega Utami', poli: 'Poli Gigi', dokter: 'drg. Amanda Kirana, Sp.KG', status: 'Sedang Diperiksa', waktu: '09:20' },
-          { no: 'C-012', nama: 'Muhammad Rizky (Anak)', poli: 'Poli Anak', dokter: 'dr. Dewi Lestari, Sp.A', status: 'Menunggu', waktu: '09:40' }
-        ];
-        localStorage.setItem('klinikita_queues', JSON.stringify(defaultQueues));
-      }
+      // 1. Inisialisasi seluruh store di LocalStorage
+      KlinikitaStore.init();
 
+      // 2. Sinkronkan tampilan menu berdasarkan status login
       updateAuthUI();
 
-      // Update hero queue status
-      const queues = JSON.parse(localStorage.getItem('klinikita_queues') || '[]');
+      // 3. Tampilkan antrean aktif di widget beranda
+      const queues = KlinikitaStore.getQueues();
       const active = queues.find(q => q.status === 'Sedang Diperiksa') || queues[0];
-      if (active && document.getElementById('hero-live-queue')) {
-        document.getElementById('hero-live-queue').innerText = `${active.no} (${active.poli})`;
+      const liveBadge = document.getElementById('hero-live-queue');
+      if (active && liveBadge) {
+        liveBadge.innerText = `${active.no} (${active.poli})`;
       }
     }
   </script>
