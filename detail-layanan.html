@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- TAG WAJIB KEAMANAN SEO -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Detail Layanan & Fasilitas Medis - Klinikita Hospital & Clinic Management System</title>
+
+  <!-- Favicon Klinikita (SVG Data URI: Steelblue Badge, Medical Cross & Pulse Heartbeat) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='kg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230284c7'/%3E%3Cstop offset='100%25' stop-color='%2306b6d4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%231d3557'/%3E%3Cpath d='M26 12h12v14h14v12h-14v14h-12v-14h-14v-12h14z' fill='url(%23kg)'/%3E%3Cpath d='M19 32h7l3-6 4 12 3-6h9' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts: Roboto & Lato -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons via CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- AOS Animation via CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+  <!-- SweetAlert2 via CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+  <!-- Tailwind CSS via CDN dengan Konfigurasi Skema Warna Korporat MedService -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'steelblue': '#1d3557',
+            'steelblue-dark': '#132338',
+            'medical-blue': '#0284c7',
+            'medical-light': '#0ea5e9',
+            'medical-sky': '#e0f2fe',
+            'accent-cyan': '#06b6d4',
+            'accent-green': '#10b981',
+            'accent-red': '#ef4444',
+            'soft-bg': '#f8fafc',
+            'card-border': '#e2e8f0',
+          },
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            lato: ['Lato', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Lato', sans-serif; }
+    .hero-pattern {
+      background-color: #f8fafc;
+      background-image: radial-gradient(#cbd5e1 0.75px, transparent 0.75px), radial-gradient(#cbd5e1 0.75px, #f8fafc 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+    }
+    .accordion-content {
+      transition: max-height 0.3s ease-out, opacity 0.25s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-soft-bg text-slate-700 antialiased min-h-screen flex flex-col">
+
+  <!-- ========================================================================= -->
+  <!-- HEADER TOP STRIP (Desain Khas MedService)                                 -->
+  <!-- ========================================================================= -->
+  <div class="bg-steelblue text-white text-xs md:text-sm py-2.5 border-b border-steelblue-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-2">
+      <div class="flex items-center flex-wrap gap-4 text-slate-200">
+        <span class="flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-medical-light"></i> Jl. Kesehatan Raya No. 108, Jakarta Selatan</span>
+        <span class="hidden sm:flex items-center gap-1.5"><i class="fas fa-clock text-medical-light"></i> Pelayanan: Senin - Sabtu (07:30 - 21:00 WIB)</span>
+        <span class="flex items-center gap-1.5 text-emerald-300 font-medium"><i class="fas fa-shield-halved"></i> Terakreditasi Paripurna Kemenkes</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="tel:021500555" class="flex items-center gap-1.5 text-white hover:text-cyan-300 font-semibold transition">
+          <i class="fas fa-phone-volume text-rose-400 animate-pulse"></i> IGD 24 Jam: (021) 500-555
+        </a>
+        <div class="hidden md:flex items-center gap-2 pl-3 border-l border-slate-600 text-xs text-slate-300">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span> Cloud Node: Active (Asia-SE1)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- NAVIGATION BAR UTAMA                                                      -->
+  <!-- ========================================================================= -->
+  <header class="bg-white sticky top-0 z-40 shadow-sm border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        
+        <!-- Logo Klinikita -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-steelblue to-medical-blue flex items-center justify-center text-white shadow-md shadow-medical-blue/20 group-hover:scale-105 transition">
+            <i class="fas fa-hospital-user text-xl"></i>
+          </div>
+          <div>
+            <span class="text-2xl font-black tracking-tight text-steelblue font-lato">KLINIK<span class="text-medical-blue">ITA</span></span>
+            <span class="block text-[10px] uppercase font-bold tracking-widest text-slate-400">Hospital & Clinic Management</span>
+          </div>
+        </a>
+
+        <!-- Menu Navigasi Desktop -->
+        <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+          <a href="index.html" class="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-medical-blue hover:bg-slate-50 rounded-lg transition">Beranda</a>
+          <a href="fitur-sistem.html" class="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-medical-blue hover:bg-slate-50 rounded-lg transition">Simulasi Fitur</a>
+          <a href="detail-layanan.html" class="px-3 py-2 text-sm font-bold text-medical-blue border-b-2 border-medical-blue">Detail Layanan</a>
+          
+          <!-- Menu Admin -->
+          <div id="admin-nav-links" class="hidden items-center gap-1">
+            <a href="dashboard.html" class="px-3 py-2 text-sm font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-lg transition flex items-center gap-1.5">
+              <i class="fas fa-chart-pie text-amber-600"></i> Dashboard
+            </a>
+            <a href="laporan-data.html" class="px-3 py-2 text-sm font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition flex items-center gap-1.5">
+              <i class="fas fa-file-invoice text-emerald-600"></i> Laporan Data
+            </a>
+          </div>
+        </nav>
+
+        <!-- Aksi Kanan & Autentikasi -->
+        <div class="hidden sm:flex items-center gap-3">
+          <a href="fitur-sistem.html#pendaftaran" class="px-4 py-2.5 rounded-lg text-sm font-bold bg-medical-blue hover:bg-sky-600 text-white shadow-sm transition flex items-center gap-2">
+            <i class="fas fa-calendar-check"></i> <span>Daftar Online</span>
+          </a>
+
+          <!-- Kontainer Tombol Auth -->
+          <div id="auth-btn-container">
+            <button onclick="openLoginModal()" class="px-4 py-2.5 rounded-lg text-sm font-bold border border-slate-300 text-steelblue hover:bg-slate-100 transition flex items-center gap-2">
+              <i class="fas fa-arrow-right-to-bracket text-medical-blue"></i> <span>Masuk</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tombol Hamburger Mobile -->
+        <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-lg text-slate-600 hover:text-steelblue hover:bg-slate-100">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2">
+      <a href="index.html" class="block px-3 py-2 text-base font-semibold text-slate-700 hover:bg-slate-50 rounded-lg">Beranda</a>
+      <a href="fitur-sistem.html" class="block px-3 py-2 text-base font-semibold text-slate-700 hover:bg-slate-50 rounded-lg">Simulasi Fitur</a>
+      <a href="detail-layanan.html" class="block px-3 py-2 text-base font-bold text-medical-blue bg-blue-50/50 rounded-lg">Detail Layanan</a>
+      
+      <!-- Menu Admin Mobile -->
+      <div id="mobile-admin-links" class="hidden space-y-2 pt-2 border-t border-slate-100">
+        <a href="dashboard.html" class="block px-3 py-2 text-base font-semibold text-amber-700 bg-amber-50 rounded-lg">
+          <i class="fas fa-chart-pie mr-2"></i> Dashboard Admin
+        </a>
+        <a href="laporan-data.html" class="block px-3 py-2 text-base font-semibold text-emerald-700 bg-emerald-50 rounded-lg">
+          <i class="fas fa-file-invoice mr-2"></i> Laporan & Rekapitulasi
+        </a>
+      </div>
+
+      <div class="pt-4 border-t border-slate-100 flex flex-col gap-2" id="mobile-auth-container">
+        <!-- Terisi oleh updateAuthUI() -->
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- HERO BANNER SECTION                                                       -->
+  <!-- ========================================================================= -->
+  <section class="bg-gradient-to-r from-steelblue via-slate-800 to-steelblue-dark text-white py-14 sm:py-16 relative overflow-hidden">
+    <div class="absolute -right-12 -bottom-12 opacity-10 text-9xl text-white pointer-events-none">
+      <i class="fas fa-stethoscope"></i>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="fade-up">
+      <!-- Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs text-sky-200 mb-3 font-medium">
+        <a href="index.html" class="hover:underline">Beranda</a>
+        <i class="fas fa-chevron-right text-[10px] text-slate-400"></i>
+        <span class="text-white font-bold">Detail Layanan Medis</span>
+      </div>
+
+      <div class="max-w-3xl">
+        <span class="px-3 py-1 rounded-full bg-medical-blue/30 text-sky-200 text-xs font-bold uppercase tracking-wider border border-sky-400/30 inline-block mb-3">
+          <i class="fas fa-hospital mr-1.5"></i> Pelayanan Kesehatan Paripurna
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black font-lato tracking-tight leading-tight">
+          Katalog Lengkap Layanan & Fasilitas Medis Klinikita
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base mt-4 leading-relaxed">
+          Menyediakan 6 Poliklinik Spesialis, 4 Paket Medical Check-Up komprehensif, sarana diagnostik modern, dan fasilitas gawat darurat 24 jam dengan transparansi biaya serta sistem digital terpadu.
+        </p>
+
+        <!-- Quick Jump Links -->
+        <div class="flex flex-wrap items-center gap-2.5 mt-8 text-xs font-bold">
+          <a href="#poliklinik" class="px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white transition flex items-center gap-1.5">
+            <i class="fas fa-user-doctor text-sky-300"></i> 6 Poliklinik
+          </a>
+          <a href="#paket-mcu" class="px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white transition flex items-center gap-1.5">
+            <i class="fas fa-file-medical text-cyan-300"></i> Paket MCU
+          </a>
+          <a href="#fasilitas" class="px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white transition flex items-center gap-1.5">
+            <i class="fas fa-hospital-alt text-emerald-300"></i> Fasilitas Penunjang
+          </a>
+          <a href="#faq" class="px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white transition flex items-center gap-1.5">
+            <i class="fas fa-circle-question text-amber-300"></i> FAQ Pasien
+          </a>
+          <a href="#konsultasi" class="px-4 py-2 rounded-xl bg-medical-blue hover:bg-sky-600 text-white transition flex items-center gap-1.5">
+            <i class="fas fa-comment-medical"></i> Konsultasi Cepat
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 1: KATALOG 6 POLIKLINIK SPESIALIS                                 -->
+  <!-- ========================================================================= -->
+  <section id="poliklinik" class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12" data-aos="fade-up">
+        <span class="text-medical-blue text-xs font-bold uppercase tracking-widest">Katalog Rawat Jalan</span>
+        <h2 class="text-3xl font-black text-steelblue font-lato tracking-tight mt-1">
+          6 Departemen Poliklinik Spesialis
+        </h2>
+        <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+          Setiap poliklinik ditangani oleh dokter spesialis berpengalaman dengan standar prosedur medis terkini dan integrasi rekam medis digital.
+        </p>
+
+        <!-- Filter Tab Poliklinik -->
+        <div class="flex flex-wrap justify-center gap-2 mt-6">
+          <button onclick="filterDepartmentCards('ALL')" id="filter-btn-ALL" class="dept-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-steelblue text-white transition">Semua Poli</button>
+          <button onclick="filterDepartmentCards('Umum')" id="filter-btn-Umum" class="dept-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Poli Umum</button>
+          <button onclick="filterDepartmentCards('Gigi')" id="filter-btn-Gigi" class="dept-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Poli Gigi</button>
+          <button onclick="filterDepartmentCards('Anak')" id="filter-btn-Anak" class="dept-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Poli Anak</button>
+          <button onclick="filterDepartmentCards('Dalam')" id="filter-btn-Dalam" class="dept-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Penyakit Dalam</button>
+          <button onclick="filterDepartmentCards('Kandungan')" id="filter-btn-Kandungan" class="dept-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Kebidanan</button>
+          <button onclick="filterDepartmentCards('UGD')" id="filter-btn-UGD" class="dept-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">UGD 24 Jam</button>
+        </div>
+      </div>
+
+      <!-- Grid 6 Kartu Poliklinik -->
+      <div id="dept-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- 1. Poli Umum -->
+        <div class="dept-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition group flex flex-col" data-category="Umum" data-aos="fade-up">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80" alt="Poliklinik Umum" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-blue-600 text-white text-[10px] font-bold uppercase tracking-wider">
+              Loket 1 • Prefix A
+            </span>
+            <div class="absolute bottom-4 left-4 text-white">
+              <span class="text-xs text-sky-200 font-semibold block">Layanan Primer</span>
+              <h3 class="text-xl font-black font-lato">Poliklinik Umum & Edukasi</h3>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+            <div>
+              <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                Pemeriksaan kesehatan dasar, penegakan diagnosis awal, pengobatan keluhan umum, dan rujukan dokter spesialis.
+              </p>
+              <div class="space-y-2 text-xs text-slate-700">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-medical-blue text-xs"></i>
+                  <span>Pemeriksaan TTV, Fisik & Diagnosa Awal</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-medical-blue text-xs"></i>
+                  <span>Surat Keterangan Sehat & Bebas Narkoba</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-medical-blue text-xs"></i>
+                  <span>Resep Obat Digital & Konseling Pasien</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="text-slate-500">
+                <i class="fas fa-user-doctor text-medical-blue mr-1"></i> <b>6 Dokter</b> Bertugas
+              </div>
+              <a href="fitur-sistem.html#pendaftaran" class="px-3.5 py-2 rounded-xl bg-slate-100 group-hover:bg-medical-blue group-hover:text-white text-steelblue font-bold transition flex items-center gap-1.5">
+                <span>Daftar Antrean</span>
+                <i class="fas fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Poli Gigi -->
+        <div class="dept-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition group flex flex-col" data-category="Gigi" data-aos="fade-up" data-aos-delay="100">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=600&q=80" alt="Poliklinik Gigi" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-cyan-600 text-white text-[10px] font-bold uppercase tracking-wider">
+              Loket 2 • Prefix B
+            </span>
+            <div class="absolute bottom-4 left-4 text-white">
+              <span class="text-xs text-cyan-200 font-semibold block">Dental Care Center</span>
+              <h3 class="text-xl font-black font-lato">Poliklinik Gigi & Mulut</h3>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+            <div>
+              <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                Perawatan komprehensif kesehatan gigi dan mulut mulai dari tindakan preventif, restorasi estetika, hingga bedah minor gigi.
+              </p>
+              <div class="space-y-2 text-xs text-slate-700">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-cyan-600 text-xs"></i>
+                  <span>Scaling & Pembersihan Karang Ultrasonik</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-cyan-600 text-xs"></i>
+                  <span>Tambal Estetik Sinar Komposit Nano</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-cyan-600 text-xs"></i>
+                  <span>Perawatan Saluran Akar & Odontektomi</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="text-slate-500">
+                <i class="fas fa-user-doctor text-cyan-600 mr-1"></i> <b>4 Dokter Gigi</b>
+              </div>
+              <a href="fitur-sistem.html#pendaftaran" class="px-3.5 py-2 rounded-xl bg-slate-100 group-hover:bg-medical-blue group-hover:text-white text-steelblue font-bold transition flex items-center gap-1.5">
+                <span>Daftar Antrean</span>
+                <i class="fas fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Poli Anak -->
+        <div class="dept-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition group flex flex-col" data-category="Anak" data-aos="fade-up" data-aos-delay="200">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80" alt="Poliklinik Anak" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider">
+              Loket 3 • Prefix C
+            </span>
+            <div class="absolute bottom-4 left-4 text-white">
+              <span class="text-xs text-emerald-200 font-semibold block">Spesialis Anak (Sp.A)</span>
+              <h3 class="text-xl font-black font-lato">Poliklinik Kesehatan Anak</h3>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+            <div>
+              <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                Pelayanan ramah anak untuk pemantauan tumbuh kembang, imunisasi berkala, serta penanganan infeksi dan penyakit pediatrik.
+              </p>
+              <div class="space-y-2 text-xs text-slate-700">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-emerald-600 text-xs"></i>
+                  <span>Imunisasi Lengkap IDAI & Vaksinasi Khusus</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-emerald-600 text-xs"></i>
+                  <span>Skrining Tumbuh Kembang, Nutrisi & Gizi</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-emerald-600 text-xs"></i>
+                  <span>Ruang Tunggu Anak Tematik & Pojok Laktasi</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="text-slate-500">
+                <i class="fas fa-user-doctor text-emerald-600 mr-1"></i> <b>5 Dokter Sp.A</b>
+              </div>
+              <a href="fitur-sistem.html#pendaftaran" class="px-3.5 py-2 rounded-xl bg-slate-100 group-hover:bg-medical-blue group-hover:text-white text-steelblue font-bold transition flex items-center gap-1.5">
+                <span>Daftar Antrean</span>
+                <i class="fas fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Penyakit Dalam -->
+        <div class="dept-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition group flex flex-col" data-category="Dalam" data-aos="fade-up">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=600&q=80" alt="Penyakit Dalam" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-amber-600 text-white text-[10px] font-bold uppercase tracking-wider">
+              Loket 4 • Prefix D
+            </span>
+            <div class="absolute bottom-4 left-4 text-white">
+              <span class="text-xs text-amber-200 font-semibold block">Spesialis Penyakit Dalam (Sp.PD)</span>
+              <h3 class="text-xl font-black font-lato">Poliklinik Penyakit Dalam</h3>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+            <div>
+              <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                Penanganan kelainan organ dalam tubuh pada orang dewasa dan lansia, termasuk diabetes, hipertensi, ginjal, dan kardiovaskular.
+              </p>
+              <div class="space-y-2 text-xs text-slate-700">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-amber-600 text-xs"></i>
+                  <span>Manajemen Diabetes Melitus & Endokrin</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-amber-600 text-xs"></i>
+                  <span>Pemeriksaan Fungsi Ginjal, Hati & Saluran Cerna</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-amber-600 text-xs"></i>
+                  <span>Terapi Hipertensi & Jantung Terintegrasi</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="text-slate-500">
+                <i class="fas fa-user-doctor text-amber-600 mr-1"></i> <b>4 Dokter Sp.PD</b>
+              </div>
+              <a href="fitur-sistem.html#pendaftaran" class="px-3.5 py-2 rounded-xl bg-slate-100 group-hover:bg-medical-blue group-hover:text-white text-steelblue font-bold transition flex items-center gap-1.5">
+                <span>Daftar Antrean</span>
+                <i class="fas fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Kebidanan & Kandungan -->
+        <div class="dept-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition group flex flex-col" data-category="Kandungan" data-aos="fade-up" data-aos-delay="100">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=600&q=80" alt="Kebidanan & Kandungan" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-purple-600 text-white text-[10px] font-bold uppercase tracking-wider">
+              Loket 5 • Prefix E
+            </span>
+            <div class="absolute bottom-4 left-4 text-white">
+              <span class="text-xs text-purple-200 font-semibold block">Obstetri & Ginekologi (Sp.OG)</span>
+              <h3 class="text-xl font-black font-lato">Kebidanan & Kandungan</h3>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+            <div>
+              <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                Layanan kesehatan wanita komprehensif, pemeriksaan kehamilan terencana, USG 4D fetomaternal, hingga konsultasi fertilitas.
+              </p>
+              <div class="space-y-2 text-xs text-slate-700">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-purple-600 text-xs"></i>
+                  <span>USG 4D Real-Time HD Live Diagnostic</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-purple-600 text-xs"></i>
+                  <span>Pemeriksaan Antenatal Care (ANC) Rutin</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-purple-600 text-xs"></i>
+                  <span>Skrining Serviks (Pap Smear & HPV DNA)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="text-slate-500">
+                <i class="fas fa-user-doctor text-purple-600 mr-1"></i> <b>3 Dokter Sp.OG</b>
+              </div>
+              <a href="fitur-sistem.html#pendaftaran" class="px-3.5 py-2 rounded-xl bg-slate-100 group-hover:bg-medical-blue group-hover:text-white text-steelblue font-bold transition flex items-center gap-1.5">
+                <span>Daftar Antrean</span>
+                <i class="fas fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. UGD 24 Jam -->
+        <div class="dept-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition group flex flex-col" data-category="UGD" data-aos="fade-up" data-aos-delay="200">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=600&q=80" alt="Unit Gawat Darurat" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-rose-600 text-white text-[10px] font-bold uppercase tracking-wider animate-pulse">
+              Prioritas 24 Jam • Prefix IGD
+            </span>
+            <div class="absolute bottom-4 left-4 text-white">
+              <span class="text-xs text-rose-200 font-semibold block">Trauma & Critical Center</span>
+              <h3 class="text-xl font-black font-lato">Unit Gawat Darurat (UGD)</h3>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+            <div>
+              <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                Siaga 24 jam melayani kondisi darurat medis akut, kecelakaan, resusitasi kritis, dengan konektivitas armada ambulans.
+              </p>
+              <div class="space-y-2 text-xs text-slate-700">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-rose-600 text-xs"></i>
+                  <span>Triase Cepat & Ruang Tindakan Resusitasi</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-rose-600 text-xs"></i>
+                  <span>Pembedahan Minor & Hecting Steril</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-check-circle text-rose-600 text-xs"></i>
+                  <span>Armada Ambulans Siaga Telemetri GPS</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="text-slate-500">
+                <i class="fas fa-user-doctor text-rose-600 mr-1"></i> <b>8 Dokter & Paramedis</b>
+              </div>
+              <a href="tel:021500555" class="px-3.5 py-2 rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white font-bold transition flex items-center gap-1.5">
+                <i class="fas fa-phone-volume"></i>
+                <span>Call (021) 500-555</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 2: PAKET MEDICAL CHECK-UP (MCU)                                   -->
+  <!-- ========================================================================= -->
+  <section id="paket-mcu" class="py-16 sm:py-20 bg-slate-50 border-y border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14" data-aos="fade-up">
+        <span class="text-medical-blue text-xs font-bold uppercase tracking-widest">Pencegahan & Skrining</span>
+        <h2 class="text-3xl font-black text-steelblue font-lato tracking-tight mt-1">
+          Paket Medical Check-Up (MCU) Klinikita
+        </h2>
+        <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+          Pilihan paket skrining kesehatan preventif berkala untuk individu maupun korporasi, dilengkapi lembar hasil analitik dan konsultasi dokter ahli.
+        </p>
+      </div>
+
+      <!-- 4 Kartu Paket MCU -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- MCU 1: Basic -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between" data-aos="fade-up">
+          <div class="space-y-4">
+            <div>
+              <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider">Skrining Awal</span>
+              <h3 class="text-xl font-black text-steelblue font-lato mt-2">MCU Basic</h3>
+              <p class="text-xs text-slate-400">Pemeriksaan esensial kebugaran tubuh rutin tahunan.</p>
+            </div>
+            
+            <div class="py-2 border-y border-slate-100">
+              <span class="text-3xl font-black text-slate-800 font-lato">Rp 450.000</span>
+              <span class="text-xs text-slate-400 block">/ pemeriksaan individu</span>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-600">
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-emerald-500 mt-0.5"></i>
+                <span>Pemeriksaan Fisik Dokter Umum & TTV</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-emerald-500 mt-0.5"></i>
+                <span>Hematologi / Cek Darah Lengkap (CBC)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-emerald-500 mt-0.5"></i>
+                <span>Urin Rutin & Glukosa Puasa</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-emerald-500 mt-0.5"></i>
+                <span>Laporan Medis Cetak & Digital Cloud</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8">
+            <button onclick="pilihPaketMCU('MCU Basic', 450000)" class="w-full py-3 rounded-xl bg-slate-100 hover:bg-steelblue hover:text-white text-steelblue font-bold text-xs transition">
+              Pilih Paket Basic
+            </button>
+          </div>
+        </div>
+
+        <!-- MCU 2: Eksekutif (Recommended) -->
+        <div class="bg-white rounded-3xl p-6 border-2 border-medical-blue shadow-lg hover:shadow-2xl transition flex flex-col justify-between relative" data-aos="fade-up" data-aos-delay="100">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-medical-blue text-white text-[10px] font-bold uppercase tracking-wider shadow">
+            Paling Populer & Lengkap
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <span class="px-3 py-1 rounded-full bg-sky-100 text-medical-blue text-[10px] font-bold uppercase tracking-wider">Komprehensif</span>
+              <h3 class="text-xl font-black text-steelblue font-lato mt-2">MCU Eksekutif</h3>
+              <p class="text-xs text-slate-400">Pemeriksaan fungsi organ lengkap & radiologi.</p>
+            </div>
+            
+            <div class="py-2 border-y border-slate-100">
+              <span class="text-3xl font-black text-medical-blue font-lato">Rp 1.250.000</span>
+              <span class="text-xs text-slate-400 block">/ pemeriksaan lengkap</span>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-700">
+              <li class="flex items-start gap-2 font-semibold">
+                <i class="fas fa-check-circle text-medical-blue mt-0.5"></i>
+                <span>Semua item MCU Basic tercakup</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-medical-blue mt-0.5"></i>
+                <span>Rontgen Thorax / Dada Digital</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-medical-blue mt-0.5"></i>
+                <span>Rekam Jantung (EKG 12-Lead)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-medical-blue mt-0.5"></i>
+                <span>Profil Lipid (Kolesterol, HDL, LDL, TG)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-medical-blue mt-0.5"></i>
+                <span>Fungsi Hati & Ginjal (SGOT/SGPT, Ureum)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-medical-blue mt-0.5"></i>
+                <span>Konsultasi Dokter Spesialis Penyakit Dalam</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8">
+            <button onclick="pilihPaketMCU('MCU Eksekutif', 1250000)" class="w-full py-3 rounded-xl bg-medical-blue hover:bg-sky-600 text-white font-bold text-xs shadow-md transition">
+              Pilih Paket Eksekutif
+            </button>
+          </div>
+        </div>
+
+        <!-- MCU 3: Jantung -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between" data-aos="fade-up" data-aos-delay="200">
+          <div class="space-y-4">
+            <div>
+              <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-[10px] font-bold uppercase tracking-wider">Kardiovaskular</span>
+              <h3 class="text-xl font-black text-steelblue font-lato mt-2">MCU Jantung Sehat</h3>
+              <p class="text-xs text-slate-400">Deteksi dini risiko jantung & pembuluh darah.</p>
+            </div>
+            
+            <div class="py-2 border-y border-slate-100">
+              <span class="text-3xl font-black text-slate-800 font-lato">Rp 2.100.000</span>
+              <span class="text-xs text-slate-400 block">/ evaluasi kardiologi</span>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-600">
+              <li class="flex items-start gap-2 font-semibold">
+                <i class="fas fa-check text-rose-500 mt-0.5"></i>
+                <span>Semua item MCU Eksekutif</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-rose-500 mt-0.5"></i>
+                <span>Treadmill Exercise Stress Test</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-rose-500 mt-0.5"></i>
+                <span>Echocardiography (USG Jantung 2D)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-rose-500 mt-0.5"></i>
+                <span>Uji Biomarker hs-CRP & Troponin</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-rose-500 mt-0.5"></i>
+                <span>Konsultasi Spesialis Jantung & Pembuluh</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8">
+            <button onclick="pilihPaketMCU('MCU Jantung', 2100000)" class="w-full py-3 rounded-xl bg-slate-100 hover:bg-steelblue hover:text-white text-steelblue font-bold text-xs transition">
+              Pilih Paket Jantung
+            </button>
+          </div>
+        </div>
+
+        <!-- MCU 4: Ibu & Anak -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between" data-aos="fade-up" data-aos-delay="300">
+          <div class="space-y-4">
+            <div>
+              <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-[10px] font-bold uppercase tracking-wider">Keluarga Prima</span>
+              <h3 class="text-xl font-black text-steelblue font-lato mt-2">MCU Ibu & Anak</h3>
+              <p class="text-xs text-slate-400">Pemeriksaan antenatal & skrining balita.</p>
+            </div>
+            
+            <div class="py-2 border-y border-slate-100">
+              <span class="text-3xl font-black text-slate-800 font-lato">Rp 850.000</span>
+              <span class="text-xs text-slate-400 block">/ paket terpadu</span>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-600">
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-purple-500 mt-0.5"></i>
+                <span>Pemeriksaan Kehamilan Lengkap & ANC</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-purple-500 mt-0.5"></i>
+                <span>USG Kehamilan 4D HD-Live Diagnostic</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-purple-500 mt-0.5"></i>
+                <span>Skrining Anemia & Glukosa Ibu Hamil</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-purple-500 mt-0.5"></i>
+                <span>Evaluasi Tumbuh Kembang & Imunisasi Anak</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-purple-500 mt-0.5"></i>
+                <span>Konsultasi Ganda Sp.OG & Sp.A</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8">
+            <button onclick="pilihPaketMCU('MCU Ibu & Anak', 850000)" class="w-full py-3 rounded-xl bg-slate-100 hover:bg-steelblue hover:text-white text-steelblue font-bold text-xs transition">
+              Pilih Paket Ibu & Anak
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 3: FASILITAS PENUNJANG MEDIS                                      -->
+  <!-- ========================================================================= -->
+  <section id="fasilitas" class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14" data-aos="fade-up">
+        <span class="text-medical-blue text-xs font-bold uppercase tracking-widest">Infrastruktur Modern</span>
+        <h2 class="text-3xl font-black text-steelblue font-lato tracking-tight mt-1">
+          Fasilitas Penunjang Medis Berstandar Tinggi
+        </h2>
+        <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+          Klinikita melengkapi seluruh ruang layanan dengan teknologi mutakhir untuk menunjang akurasi diagnosa dan kenyamanan pasien.
+        </p>
+      </div>
+
+      <!-- 6 Grid Fasilitas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Fasilitas 1 -->
+        <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-lg transition space-y-3 group" data-aos="fade-up">
+          <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
+            <i class="fas fa-truck-medical"></i>
+          </div>
+          <h3 class="text-lg font-black text-steelblue font-lato">Unit Gawat Darurat (UGD) 24 Jam</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Dilengkapi ruang resusitasi kritis, defibrillator, ventilator portable, dan tenaga medis tanggap darurat yang siaga 24 jam nonstop.
+          </p>
+          <span class="text-[11px] font-bold text-rose-600 block">Siaga Panggilan Darurat: (021) 500-555</span>
+        </div>
+
+        <!-- Fasilitas 2 -->
+        <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-lg transition space-y-3 group" data-aos="fade-up" data-aos-delay="100">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 text-medical-blue flex items-center justify-center text-xl group-hover:scale-110 transition">
+            <i class="fas fa-capsules"></i>
+          </div>
+          <h3 class="text-lg font-black text-steelblue font-lato">Farmasi & Apotek Digital</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Integrasi sistem <i>e-Prescription</i> langsung dari meja dokter, verifikasi barcode resep otomatis, serta jaminan keaslian obat paten dan generik.
+          </p>
+          <span class="text-[11px] font-bold text-medical-blue block">Waktu Tunggu Obat: &lt; 10 Menit</span>
+        </div>
+
+        <!-- Fasilitas 3 -->
+        <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-lg transition space-y-3 group" data-aos="fade-up" data-aos-delay="200">
+          <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
+            <i class="fas fa-flask-vial"></i>
+          </div>
+          <h3 class="text-lg font-black text-steelblue font-lato">Laboratorium Patologi Klinis</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Mesin analizer hematologi dan kimia darah otomatis Sysmex dengan kalibrasi harian, menghasilkan hasil laboratorium akurat dan cepat.
+          </p>
+          <span class="text-[11px] font-bold text-emerald-600 block">Hasil Tes Darah Rutin: 30 Menit</span>
+        </div>
+
+        <!-- Fasilitas 4 -->
+        <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-lg transition space-y-3 group" data-aos="fade-up">
+          <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
+            <i class="fas fa-x-ray"></i>
+          </div>
+          <h3 class="text-lg font-black text-steelblue font-lato">Radiologi Digital & USG 4D</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Perangkat X-Ray digital dengan paparan radiasi minimal dan mesin Ultrasonografi 4D HD Live untuk visualisasi organ dan janin beresolusi tinggi.
+          </p>
+          <span class="text-[11px] font-bold text-cyan-600 block">Arsip Citra Medis Cloud Terenkripsi</span>
+        </div>
+
+        <!-- Fasilitas 5 -->
+        <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-lg transition space-y-3 group" data-aos="fade-up" data-aos-delay="100">
+          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
+            <i class="fas fa-van-shuttle"></i>
+          </div>
+          <h3 class="text-lg font-black text-steelblue font-lato">Armada Ambulans Cloud Fleet</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Ambulans gawat darurat bersertifikasi ICU bergerak yang dilengkapi GPS tracking real-time dan response time penjemputan rata-rata 8 menit.
+          </p>
+          <span class="text-[11px] font-bold text-amber-600 block">Standby Jemput Pasien 24/7 Jabodetabek</span>
+        </div>
+
+        <!-- Fasilitas 6 -->
+        <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-lg transition space-y-3 group" data-aos="fade-up" data-aos-delay="200">
+          <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl group-hover:scale-110 transition">
+            <i class="fas fa-kit-medical"></i>
+          </div>
+          <h3 class="text-lg font-black text-steelblue font-lato">Ruang Tindakan Bedah Minor</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Kamar operasi steril dengan sirkulasi udara bertekanan positif dan filter HEPA untuk tindakan bedah rawat jalan (sirkumsisi, eksisi tumor jinak).
+          </p>
+          <span class="text-[11px] font-bold text-purple-600 block">Standar Sterilitas Akreditasi Kemenkes</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 4: PERTANYAAN YANG SERING DIAJUKAN (FAQ ACCORDION)                -->
+  <!-- ========================================================================= -->
+  <section id="faq" class="py-16 sm:py-20 bg-slate-50 border-y border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
+        <span class="text-medical-blue text-xs font-bold uppercase tracking-widest">Informasi Pasien</span>
+        <h2 class="text-3xl font-black text-steelblue font-lato tracking-tight mt-1">
+          Pertanyaan yang Sering Diajukan (FAQ)
+        </h2>
+        <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+          Temukan jawaban cepat atas pertanyaan umum terkait pendaftaran mandiri, jaminan asuransi, antrean live, dan kebijakan poliklinik.
+        </p>
+      </div>
+
+      <!-- Akordeon FAQ -->
+      <div class="space-y-3" data-aos="fade-up">
+        
+        <!-- FAQ 1 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition">
+          <button onclick="toggleAccordion('faq-1')" class="w-full p-5 text-left font-bold text-steelblue text-sm flex items-center justify-between gap-4 hover:bg-slate-50 transition">
+            <span class="flex items-center gap-3">
+              <i class="fas fa-circle-question text-medical-blue"></i>
+              <span>Bagaimana cara mendaftar sebagai pasien baru di Klinikita secara online?</span>
+            </span>
+            <i id="faq-icon-faq-1" class="fas fa-chevron-down text-slate-400 text-xs transition duration-300"></i>
+          </button>
+          <div id="faq-content-faq-1" class="accordion-content hidden px-5 pb-5 pt-1 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+            Anda dapat membuka menu <b>Simulasi Fitur</b> pada tab <b>Pendaftaran Pasien Online</b>. Cukup isi NIK (16 digit), nama lengkap, poliklinik tujuan, dokter spesialis, serta jenis penjamin (Umum/BPJS/Asuransi). Sistem akan menerbitkan <b>Nomor Antrean Digital</b> secara otomatis yang dapat langsung Anda unduh atau cetak.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition">
+          <button onclick="toggleAccordion('faq-2')" class="w-full p-5 text-left font-bold text-steelblue text-sm flex items-center justify-between gap-4 hover:bg-slate-50 transition">
+            <span class="flex items-center gap-3">
+              <i class="fas fa-circle-question text-medical-blue"></i>
+              <span>Apakah Klinikita melayani pasien BPJS Kesehatan dan Asuransi Swasta?</span>
+            </span>
+            <i id="faq-icon-faq-2" class="fas fa-chevron-down text-slate-400 text-xs transition duration-300"></i>
+          </button>
+          <div id="faq-content-faq-2" class="accordion-content hidden px-5 pb-5 pt-1 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+            Ya, Klinikita bekerja sama resmi dengan <b>BPJS Kesehatan</b> (Faskes Tingkat Pertama & Rujukan Poliklinik Spesialis) serta lebih dari 20 mitra asuransi swasta terkemuka dengan sistem *cashless* (klaim langsung). Pasien hanya perlu membawa KTP dan kartu kepesertaan aktif saat kunjungan.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition">
+          <button onclick="toggleAccordion('faq-3')" class="w-full p-5 text-left font-bold text-steelblue text-sm flex items-center justify-between gap-4 hover:bg-slate-50 transition">
+            <span class="flex items-center gap-3">
+              <i class="fas fa-circle-question text-medical-blue"></i>
+              <span>Bagaimana cara memantau pergerakan antrean pasien secara real-time?</span>
+            </span>
+            <i id="faq-icon-faq-3" class="fas fa-chevron-down text-slate-400 text-xs transition duration-300"></i>
+          </button>
+          <div id="faq-content-faq-3" class="accordion-content hidden px-5 pb-5 pt-1 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+            Klinikita menyediakan modul <b>Display Antrean Poliklinik Live</b> di halaman Simulasi Fitur. Pasien dapat melihat nomor yang sedang dipanggil pada setiap loket poli, nomor antrean yang sedang menunggu, serta jam pelayanan yang terupdate setiap detik tanpa harus menunggu lama di ruang tunggu.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition">
+          <button onclick="toggleAccordion('faq-4')" class="w-full p-5 text-left font-bold text-steelblue text-sm flex items-center justify-between gap-4 hover:bg-slate-50 transition">
+            <span class="flex items-center gap-3">
+              <i class="fas fa-circle-question text-medical-blue"></i>
+              <span>Apakah ada kalkulator untuk menghitung estimasi biaya medis sebelum berobat?</span>
+            </span>
+            <i id="faq-icon-faq-4" class="fas fa-chevron-down text-slate-400 text-xs transition duration-300"></i>
+          </button>
+          <div id="faq-content-faq-4" class="accordion-content hidden px-5 pb-5 pt-1 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+            Ya! Kami memiliki fitur <b>Kalkulator Estimasi Biaya Medis Transparan</b>. Anda dapat memilih kualifikasi dokter, tindakan medis tambahan (rontgen, cek darah, USG, nebulizer), kelas rawat inap, dan skema penjamin. Sistem akan menghitung total biaya secara langsung dan Anda dapat mencetak nota estimasi resminya.
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition">
+          <button onclick="toggleAccordion('faq-5')" class="w-full p-5 text-left font-bold text-steelblue text-sm flex items-center justify-between gap-4 hover:bg-slate-50 transition">
+            <span class="flex items-center gap-3">
+              <i class="fas fa-circle-question text-medical-blue"></i>
+              <span>Apakah layanan Unit Gawat Darurat (UGD) dan Ambulans selalu siaga 24 jam?</span>
+            </span>
+            <i id="faq-icon-faq-5" class="fas fa-chevron-down text-slate-400 text-xs transition duration-300"></i>
+          </button>
+          <div id="faq-content-faq-5" class="accordion-content hidden px-5 pb-5 pt-1 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+            Tentu. Layanan UGD, laboratorium cito, farmasi emergensi, dan armada ambulans siaga selama <b>24 jam nonstop setiap hari</b> termasuk hari libur nasional. Anda dapat menghubungi sambungan gawat darurat di <b>(021) 500-555</b> untuk respon cepat tim medis.
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition">
+          <button onclick="toggleAccordion('faq-6')" class="w-full p-5 text-left font-bold text-steelblue text-sm flex items-center justify-between gap-4 hover:bg-slate-50 transition">
+            <span class="flex items-center gap-3">
+              <i class="fas fa-circle-question text-medical-blue"></i>
+              <span>Bagaimana cara melakukan pembatalan atau perubahan jadwal konsultasi dokter?</span>
+            </span>
+            <i id="faq-icon-faq-6" class="fas fa-chevron-down text-slate-400 text-xs transition duration-300"></i>
+          </button>
+          <div id="faq-content-faq-6" class="accordion-content hidden px-5 pb-5 pt-1 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+            Perubahan jadwal atau pembatalan dapat dilakukan minimal 2 jam sebelum sesi praktik dokter dimulai melalui layanan Customer Service WhatsApp atau menggunakan formulir konsultasi cepat di bawah ini dengan mencantumkan nomor tiket pendaftaran Anda.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 5: FORMULIR KONSULTASI CEPAT & PERTANYAAN                         -->
+  <!-- ========================================================================= -->
+  <section id="konsultasi" class="py-16 sm:py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="bg-gradient-to-br from-steelblue to-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden" data-aos="zoom-in">
+        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl text-white pointer-events-none">
+          <i class="fas fa-headset"></i>
+        </div>
+
+        <div class="max-w-2xl relative z-10">
+          <span class="px-3 py-1 rounded-full bg-medical-blue/30 text-sky-300 text-xs font-bold uppercase tracking-wider border border-sky-400/30 inline-block mb-3">
+            Layanan Pelanggan & Tanya Medis
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black font-lato tracking-tight">
+            Formulir Konsultasi & Layanan Informasi
+          </h2>
+          <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+            Punya pertanyaan mengenai jadwal dokter spesialis, paket MCU, atau keluhan kesehatan? Kirimkan pesan Anda dan tim konselor medis kami akan membalas melalui WhatsApp / Email.
+          </p>
+
+          <form id="consultation-form" onsubmit="handleConsultationSubmit(event)" class="mt-8 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-200 mb-1">Nama Lengkap</label>
+                <input type="text" id="consult-nama" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 text-xs focus:ring-2 focus:ring-cyan-400 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-200 mb-1">Nomor WhatsApp / Telepon</label>
+                <input type="tel" id="consult-telepon" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 text-xs focus:ring-2 focus:ring-cyan-400 focus:outline-none">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-200 mb-1">Alamat Email</label>
+                <input type="email" id="consult-email" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 text-xs focus:ring-2 focus:ring-cyan-400 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-200 mb-1">Poliklinik Tujuan</label>
+                <select id="consult-poli" required class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-white/20 text-white text-xs focus:ring-2 focus:ring-cyan-400 focus:outline-none">
+                  <option value="Poli Umum">Poli Umum & Edukasi</option>
+                  <option value="Poli Gigi">Poli Gigi & Mulut</option>
+                  <option value="Poli Anak">Poli Kesehatan Anak</option>
+                  <option value="Penyakit Dalam">Penyakit Dalam</option>
+                  <option value="Kebidanan & Kandungan">Kebidanan & Kandungan</option>
+                  <option value="Paket MCU">Informasi Paket MCU</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-200 mb-1">Pesan / Keluhan Awal Pasien</label>
+              <textarea id="consult-pesan" required rows="3" placeholder="Tuliskan pertanyaan jadwal dokter, gejala umum, atau kebutuhan layanan..." class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 text-xs focus:ring-2 focus:ring-cyan-400 focus:outline-none"></textarea>
+            </div>
+
+            <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p class="text-[11px] text-slate-400">
+                <i class="fas fa-lock mr-1 text-cyan-400"></i> Data pribadi Anda terenkripsi aman sesuai kode etik medis.
+              </p>
+              <button type="submit" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-medical-blue hover:bg-sky-500 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2">
+                <i class="fas fa-paper-plane"></i>
+                <span>Kirim Konsultasi Cepat</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL LOGIN (Sistem Autentikasi Pengguna)                                  -->
+  <!-- ========================================================================= -->
+  <div id="login-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
+      <button onclick="closeLoginModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-lg">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-medical-blue/10 text-medical-blue mx-auto flex items-center justify-center text-xl mb-3">
+          <i class="fas fa-hospital-user"></i>
+        </div>
+        <h3 class="text-2xl font-black text-steelblue font-lato">Autentikasi Akun</h3>
+        <p class="text-xs text-slate-500 mt-1">Masuk untuk mengakses sistem portal Klinikita</p>
+      </div>
+
+      <!-- Tombol Demo Pengisian Cepat -->
+      <div class="grid grid-cols-2 gap-2 mb-5">
+        <button type="button" onclick="fillDemoCredentials('admin')" class="py-2 px-3 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold transition flex items-center justify-center gap-1.5">
+          <i class="fas fa-user-shield text-amber-600"></i> Akun Admin Demo
+        </button>
+        <button type="button" onclick="fillDemoCredentials('pasien')" class="py-2 px-3 rounded-xl border border-sky-300 bg-sky-50 hover:bg-sky-100 text-sky-800 text-xs font-bold transition flex items-center justify-center gap-1.5">
+          <i class="fas fa-user text-medical-blue"></i> Akun Pasien Demo
+        </button>
+      </div>
+
+      <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Email / Username</label>
+          <div class="relative">
+            <i class="fas fa-envelope absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+            <input type="text" id="login-username" required placeholder="admin@klinikita.id" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-medical-blue focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Kata Sandi</label>
+          <div class="relative">
+            <i class="fas fa-lock absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+            <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-medical-blue focus:outline-none">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-medical-blue hover:bg-sky-600 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+          <i class="fas fa-arrow-right-to-bracket"></i> Masuk Sekarang
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER (4 KOLOM KHAS MEDSERVICE)                                          -->
+  <!-- ========================================================================= -->
+  <footer class="bg-steelblue-dark text-slate-300 text-xs pt-12 pb-6 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        
+        <!-- Kolom 1: Profil Klinikita -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-medical-blue flex items-center justify-center text-white text-lg">
+              <i class="fas fa-hospital-user"></i>
+            </div>
+            <span class="text-2xl font-black text-white font-lato tracking-tight">KLINIK<span class="text-medical-light">ITA</span></span>
+          </div>
+          <p class="text-slate-400 leading-relaxed">
+            Sistem tata kelola klinik dan rumah sakit berbasis komputasi awan. Menyajikan layanan medis cepat, modern, dan transparan.
+          </p>
+          <div class="flex items-center gap-3 pt-1">
+            <a href="#" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-medical-blue text-white flex items-center justify-center transition"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-medical-blue text-white flex items-center justify-center transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-medical-blue text-white flex items-center justify-center transition"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-medical-blue text-white flex items-center justify-center transition"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Kolom 2: Navigasi Cepat -->
+        <div class="space-y-3">
+          <h4 class="text-white font-bold font-lato text-sm uppercase tracking-wider">Navigasi Utama</h4>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="hover:text-cyan-300 transition flex items-center gap-1.5"><i class="fas fa-angle-right text-[10px] text-cyan-400"></i> Beranda & Portal</a></li>
+            <li><a href="fitur-sistem.html" class="hover:text-cyan-300 transition flex items-center gap-1.5"><i class="fas fa-angle-right text-[10px] text-cyan-400"></i> Simulasi Fitur & Antrean</a></li>
+            <li><a href="detail-layanan.html" class="text-medical-light font-bold transition flex items-center gap-1.5"><i class="fas fa-angle-right text-[10px] text-cyan-400"></i> Detail Layanan & Spesialis</a></li>
+            <li><a href="dashboard.html" class="hover:text-cyan-300 transition flex items-center gap-1.5"><i class="fas fa-angle-right text-[10px] text-cyan-400"></i> Dashboard Operasional</a></li>
+            <li><a href="laporan-data.html" class="hover:text-cyan-300 transition flex items-center gap-1.5"><i class="fas fa-angle-right text-[10px] text-cyan-400"></i> Laporan & Rekapitulasi</a></li>
+          </ul>
+        </div>
+
+        <!-- Kolom 3: Jam Pelayanan Poliklinik -->
+        <div class="space-y-3">
+          <h4 class="text-white font-bold font-lato text-sm uppercase tracking-wider">Jam Operasional</h4>
+          <div class="space-y-1.5 text-slate-400">
+            <div class="flex justify-between py-1 border-b border-slate-800">
+              <span>Senin - Jumat:</span>
+              <span class="text-white font-semibold">07:30 - 21:00 WIB</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-slate-800">
+              <span>Sabtu:</span>
+              <span class="text-white font-semibold">08:00 - 20:00 WIB</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-slate-800">
+              <span>Minggu & Libur:</span>
+              <span class="text-amber-300 font-semibold">Spesialis Tertentu</span>
+            </div>
+            <div class="flex justify-between py-1">
+              <span class="text-rose-400 font-bold">UGD & Ambulans:</span>
+              <span class="text-rose-400 font-bold">24 Jam Nonstop</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kolom 4: Kontak & Call Center -->
+        <div class="space-y-3">
+          <h4 class="text-white font-bold font-lato text-sm uppercase tracking-wider">Pusat Bantuan</h4>
+          <p class="text-slate-400"><i class="fas fa-map-pin text-medical-light mr-2"></i>Jl. Kesehatan Raya No. 108, Jaksel</p>
+          <p class="text-slate-400"><i class="fas fa-envelope text-medical-light mr-2"></i>layanan@klinikita.id</p>
+          <div class="pt-2">
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
+              <span class="text-[10px] text-slate-400 block uppercase tracking-wider font-bold">Hotline Pasien & Ambulans</span>
+              <a href="tel:021500555" class="text-lg font-black text-rose-400 hover:text-rose-300 font-lato">(021) 500-555</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-6 border-t border-slate-800/80 text-center text-slate-500 text-[11px] flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p>&copy; 2026 Klinikita Hospital & Clinic Cloud Management System. Seluruh hak cipta dilindungi.</p>
+        <p class="text-slate-400">Tugas Komputasi Awan • MedService Corporate Template</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT EMBEDDED                                                       -->
+  <!-- ========================================================================= -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    // =========================================================================
+    // STORE KONSISTEN LOKAL STORAGE (KLINIKITA STORE)
+    // =========================================================================
+    const KLINIKITA_STORAGE_KEYS = {
+      SESSION: 'klinikita_session',
+      QUEUES: 'klinikita_queues',
+      PATIENTS: 'klinikita_patients',
+      TRANSACTIONS: 'klinikita_transactions'
+    };
+
+    const KlinikitaStore = {
+      getSession() {
+        try {
+          const raw = localStorage.getItem(KLINIKITA_STORAGE_KEYS.SESSION);
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) { return null; }
+      },
+      setSession(d) { localStorage.setItem(KLINIKITA_STORAGE_KEYS.SESSION, JSON.stringify(d)); },
+      clearSession() { localStorage.removeItem(KLINIKITA_STORAGE_KEYS.SESSION); },
+      getTransactions() { return JSON.parse(localStorage.getItem(KLINIKITA_STORAGE_KEYS.TRANSACTIONS) || '[]'); },
+      addTransaction(item) {
+        const list = this.getTransactions();
+        list.push(item);
+        localStorage.setItem(KLINIKITA_STORAGE_KEYS.TRANSACTIONS, JSON.stringify(list));
+        return list;
+      }
+    };
+
+    // =========================================================================
+    // INISIALISASI HALAMAN
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      AOS.init({ duration: 800, once: true });
+      updateAuthUI();
+    });
+
+    // =========================================================================
+    // FILTER KARTU POLIKLINIK
+    // =========================================================================
+    function filterDepartmentCards(category) {
+      // Update Button Styles
+      document.querySelectorAll('.dept-filter-btn').forEach(btn => {
+        btn.className = 'dept-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+      });
+      const activeBtn = document.getElementById(`filter-btn-${category}`);
+      if (activeBtn) {
+        activeBtn.className = 'dept-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-steelblue text-white transition';
+      }
+
+      // Filter Cards
+      const cards = document.querySelectorAll('.dept-card');
+      cards.forEach(c => {
+        if (category === 'ALL' || c.getAttribute('data-category') === category) {
+          c.classList.remove('hidden');
+        } else {
+          c.classList.add('hidden');
+        }
+      });
+    }
+
+    // =========================================================================
+    // PILIH PAKET MEDICAL CHECK-UP
+    // =========================================================================
+    function pilihPaketMCU(packageName, price) {
+      Swal.fire({
+        title: `Pilih ${packageName}?`,
+        html: `Biaya paket: <b>Rp ${price.toLocaleString('id-ID')}</b>.<br>Lanjutkan ke halaman reservasi pendaftaran online?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0284c7',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Ya, Reservasi Sekarang',
+        cancelButtonText: 'Batal'
+      }).then(r => {
+        if (r.isConfirmed) {
+          window.location.href = 'fitur-sistem.html#pendaftaran';
+        }
+      });
+    }
+
+    // =========================================================================
+    // AKORDEON FAQ INTERAKTIF
+    // =========================================================================
+    function toggleAccordion(id) {
+      const content = document.getElementById(`faq-content-${id}`);
+      const icon = document.getElementById(`faq-icon-${id}`);
+
+      if (content) {
+        const isHidden = content.classList.contains('hidden');
+        
+        // Tutup semua akordeon lainnya terlebih dahulu
+        document.querySelectorAll('.accordion-content').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('[id^="faq-icon-"]').forEach(ic => ic.className = 'fas fa-chevron-down text-slate-400 text-xs transition duration-300');
+
+        if (isHidden) {
+          content.classList.remove('hidden');
+          if (icon) icon.className = 'fas fa-chevron-up text-medical-blue text-xs transition duration-300';
+        }
+      }
+    }
+
+    // =========================================================================
+    // SUBMIT FORM KONSULTASI CEPAT
+    // =========================================================================
+    function handleConsultationSubmit(e) {
+      e.preventDefault();
+      const nama = document.getElementById('consult-nama').value.trim();
+      const telepon = document.getElementById('consult-telepon').value.trim();
+      const email = document.getElementById('consult-email').value.trim();
+      const poli = document.getElementById('consult-poli').value;
+      const pesan = document.getElementById('consult-pesan').value.trim();
+
+      const ticketId = 'KNS-' + Math.floor(100000 + Math.random() * 900000);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Konsultasi Terkirim!',
+        html: `
+          <div class="text-left text-xs space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200 mt-2">
+            <p><b>Nomor Tiket:</b> <span class="font-mono text-medical-blue font-bold">${ticketId}</span></p>
+            <p><b>Nama:</b> ${nama}</p>
+            <p><b>Poliklinik Tujuan:</b> ${poli}</p>
+            <p><b>Kontak:</b> ${telepon} (${email})</p>
+            <p class="text-[11px] text-slate-500 pt-1 border-t border-slate-200">Tim konselor medis Klinikita akan segera menghubungi Anda melalui WhatsApp / Email dalam waktu 15 menit.</p>
+          </div>
+        `,
+        confirmButtonColor: '#0284c7',
+        confirmButtonText: 'Selesai'
+      });
+
+      document.getElementById('consultation-form').reset();
+    }
+
+    // =========================================================================
+    // SISTEM AUTENTIKASI GLOBAL
+    // =========================================================================
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    }
+
+    function openLoginModal() {
+      document.getElementById('login-modal')?.classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('login-modal')?.classList.add('hidden');
+    }
+
+    function fillDemoCredentials(type) {
+      const userInput = document.getElementById('login-username');
+      const passInput = document.getElementById('login-password');
+      if (type === 'admin') {
+        if (userInput) userInput.value = 'admin@klinikita.id';
+        if (passInput) passInput.value = 'admin123';
+      } else {
+        if (userInput) userInput.value = 'pasien@klinikita.id';
+        if (passInput) passInput.value = 'pasien123';
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const user = document.getElementById('login-username').value.trim();
+      const pass = document.getElementById('login-password').value.trim();
+
+      if ((user === 'admin@klinikita.id' || user === 'admin') && pass === 'admin123') {
+        KlinikitaStore.setSession({
+          role: 'admin',
+          name: 'dr. Hendra Pratama, Sp.PD (Admin)',
+          email: 'admin@klinikita.id',
+          loginTime: new Date().toISOString()
+        });
+        closeLoginModal();
+        updateAuthUI();
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Admin Berhasil',
+          text: 'Menu Dashboard dan Laporan Data kini aktif di bilah navigasi.',
+          timer: 1500,
+          confirmButtonColor: '#0284c7'
+        });
+      } else if (user === 'pasien@klinikita.id' && pass === 'pasien123') {
+        KlinikitaStore.setSession({
+          role: 'pasien',
+          name: 'Ahmad Fauzi (Pasien)',
+          email: 'pasien@klinikita.id',
+          loginTime: new Date().toISOString()
+        });
+        closeLoginModal();
+        updateAuthUI();
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Pasien Berhasil',
+          timer: 1500,
+          confirmButtonColor: '#0284c7'
+        });
+      } else {
+        Swal.fire({ icon: 'error', title: 'Gagal Masuk', text: 'Kredensial tidak valid!', confirmButtonColor: '#ef4444' });
+      }
+    }
+
+    function handleLogout() {
+      Swal.fire({
+        title: 'Logout?',
+        text: 'Keluar dari sesi akun saat ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0284c7',
+        confirmButtonText: 'Logout'
+      }).then(r => {
+        if (r.isConfirmed) {
+          KlinikitaStore.clearSession();
+          updateAuthUI();
+        }
+      });
+    }
+
+    function updateAuthUI() {
+      const session = KlinikitaStore.getSession();
+      const adminNav = document.getElementById('admin-nav-links');
+      const mobileAdmin = document.getElementById('mobile-admin-links');
+      const authContainer = document.getElementById('auth-btn-container');
+      const mobileAuth = document.getElementById('mobile-auth-container');
+
+      if (session && session.role === 'admin') {
+        if (adminNav) { adminNav.classList.remove('hidden'); adminNav.classList.add('flex'); }
+        if (mobileAdmin) mobileAdmin.classList.remove('hidden');
+        if (authContainer) {
+          authContainer.innerHTML = `
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold px-2.5 py-1 rounded bg-amber-100 text-amber-800 border border-amber-200 hidden xl:inline-block">Admin</span>
+              <button onclick="handleLogout()" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 transition"><i class="fas fa-power-off"></i> Logout</button>
+            </div>
+          `;
+        }
+        if (mobileAuth) {
+          mobileAuth.innerHTML = `<button onclick="handleLogout()" class="w-full text-center px-4 py-2.5 rounded-lg font-bold bg-rose-50 text-rose-700">Logout (Admin)</button>`;
+        }
+      } else if (session && session.role === 'pasien') {
+        if (adminNav) adminNav.classList.add('hidden');
+        if (mobileAdmin) mobileAdmin.classList.add('hidden');
+        if (authContainer) {
+          authContainer.innerHTML = `
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold px-2.5 py-1 rounded bg-sky-100 text-medical-blue hidden xl:inline-block">Pasien</span>
+              <button onclick="handleLogout()" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition"><i class="fas fa-power-off"></i> Logout</button>
+            </div>
+          `;
+        }
+        if (mobileAuth) {
+          mobileAuth.innerHTML = `<button onclick="handleLogout()" class="w-full text-center px-4 py-2.5 rounded-lg font-bold bg-slate-100 text-slate-700">Logout (Pasien)</button>`;
+        }
+      } else {
+        if (adminNav) adminNav.classList.add('hidden');
+        if (mobileAdmin) mobileAdmin.classList.add('hidden');
+        if (authContainer) {
+          authContainer.innerHTML = `
+            <button onclick="openLoginModal()" class="px-4 py-2.5 rounded-lg text-sm font-bold border border-slate-300 text-steelblue hover:bg-slate-100 transition flex items-center gap-2">
+              <i class="fas fa-arrow-right-to-bracket text-medical-blue"></i> <span>Masuk</span>
+            </button>
+          `;
+        }
+        if (mobileAuth) {
+          mobileAuth.innerHTML = `
+            <button onclick="openLoginModal()" class="w-full text-center px-4 py-2.5 rounded-lg font-bold border border-slate-300 text-steelblue hover:bg-slate-50">
+              <i class="fas fa-arrow-right-to-bracket mr-1.5"></i> Masuk (Demo)
+            </button>
+          `;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+
