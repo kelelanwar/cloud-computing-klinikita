@@ -61,28 +61,85 @@
     body { font-family: 'Roboto', sans-serif; }
     h1, h2, h3, h4, h5, h6 { font-family: 'Lato', sans-serif; }
     
-    /* PRINT OPTIMIZATION STYLES */
+    /* ========================================================================= */
+    /* PRINT OPTIMIZATION STYLES                                                 */
+    /* ========================================================================= */
     @media print {
       body { background: white !important; color: black !important; }
-      header, footer, #access-guard, #top-strip, #action-toolbar, #filter-toolbar, #login-modal, #invoice-modal, .no-print {
+      
+      /* Elemen global yang selalu disembunyikan saat mencetak */
+      header, footer, #access-guard, #top-strip, #action-toolbar, #filter-toolbar, #login-modal, .no-print {
         display: none !important;
       }
-      #print-letterhead {
+
+      /* ------------------------------------------------------------------------- */
+      /* MODE 1: CETAK KWITANSI TRANSAKSI TERPILIH SAJA (Single Receipt Mode)      */
+      /* ------------------------------------------------------------------------- */
+      body.print-receipt-mode #print-letterhead,
+      body.print-receipt-mode main {
+        display: none !important;
+      }
+
+      body.print-receipt-mode #invoice-modal {
+        display: block !important;
+        position: static !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      body.print-receipt-mode #invoice-modal > div {
+        max-width: 600px !important;
+        margin: 15px auto !important;
+        border: 2px solid #1e293b !important;
+        box-shadow: none !important;
+        padding: 24px !important;
+        border-radius: 16px !important;
+        background: white !important;
+        color: #0f172a !important;
+      }
+
+      body.print-receipt-mode .modal-close-btn,
+      body.print-receipt-mode .modal-action-buttons {
+        display: none !important;
+      }
+
+      /* ------------------------------------------------------------------------- */
+      /* MODE 2: CETAK REKAPITULASI LAPORAN SELURUH TRANSAKSI (Default Report Mode) */
+      /* ------------------------------------------------------------------------- */
+      body:not(.print-receipt-mode) #invoice-modal {
+        display: none !important;
+      }
+
+      body:not(.print-receipt-mode) #print-letterhead {
         display: block !important;
       }
-      main {
+
+      body:not(.print-receipt-mode) main {
+        display: block !important;
         max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
       }
-      .card-print {
+
+      body:not(.print-receipt-mode) #print-signature {
+        display: block !important;
+      }
+
+      body:not(.print-receipt-mode) .card-print {
         box-shadow: none !important;
         border: 1px solid #cbd5e1 !important;
       }
-      table {
+
+      body:not(.print-receipt-mode) table {
         font-size: 10px !important;
       }
-      th, td {
+
+      body:not(.print-receipt-mode) th,
+      body:not(.print-receipt-mode) td {
         padding: 6px 8px !important;
       }
     }
@@ -536,12 +593,12 @@
   <!-- ========================================================================= -->
   <div id="invoice-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative max-h-[90vh] overflow-y-auto">
-      <button onclick="closeInvoiceModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-lg">
+      <button onclick="closeInvoiceModal()" class="modal-close-btn absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-lg">
         <i class="fas fa-times"></i>
       </button>
 
-      <!-- Lembar Kwitansi -->
-      <div class="space-y-4 text-xs">
+      <!-- Lembar Kwitansi Resmi -->
+      <div id="printable-single-receipt" class="space-y-4 text-xs">
         <div class="border-b-2 border-steelblue pb-3 flex items-center justify-between">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-medical-blue text-white flex items-center justify-center text-lg">
@@ -549,24 +606,24 @@
             </div>
             <div>
               <h3 class="text-lg font-black text-steelblue font-lato">KLINIKITA HEALTH</h3>
-              <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Bukti Pembayaran / Kwitansi Resmi</p>
+              <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Bukti Pembayaran / Kwitansi Pelayanan Medis</p>
             </div>
           </div>
-          <span class="px-2.5 py-1 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">VERIFIED CLOUD</span>
+          <span class="px-2.5 py-1 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px] border border-emerald-200">VERIFIED CLOUD</span>
         </div>
 
         <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5">
           <div class="flex justify-between">
-            <span class="text-slate-500">No. Registrasi / ID:</span>
+            <span class="text-slate-500">No. Registrasi / Kwitansi:</span>
             <span class="font-mono font-bold text-slate-800" id="inv-id">--</span>
           </div>
           <div class="flex justify-between">
-            <span class="text-slate-500">Tanggal Transaksi:</span>
+            <span class="text-slate-500">Tanggal & Waktu:</span>
             <span class="font-semibold text-slate-800" id="inv-tanggal">--</span>
           </div>
           <div class="flex justify-between">
             <span class="text-slate-500">Nama Pasien:</span>
-            <span class="font-bold text-steelblue" id="inv-nama">--</span>
+            <span class="font-bold text-steelblue text-sm" id="inv-nama">--</span>
           </div>
           <div class="flex justify-between">
             <span class="text-slate-500">Layanan Poliklinik:</span>
@@ -577,7 +634,7 @@
             <span class="font-medium text-slate-700" id="inv-dokter">--</span>
           </div>
           <div class="flex justify-between">
-            <span class="text-slate-500">Metode & Status:</span>
+            <span class="text-slate-500">Metode & Penjamin:</span>
             <span class="font-bold text-emerald-700" id="inv-status">--</span>
           </div>
         </div>
@@ -588,7 +645,7 @@
             <span>Jumlah</span>
           </div>
           <div class="p-3 flex justify-between items-center text-slate-600 border-t border-slate-100">
-            <span id="inv-item-desc">Konsultasi Medis & Tindakan Poliklinik</span>
+            <span id="inv-item-desc">Konsultasi Medis & Pemeriksaan Poliklinik</span>
             <span class="font-bold text-slate-800" id="inv-total-amount">Rp 0</span>
           </div>
           <div class="p-3 bg-steelblue text-white font-bold flex justify-between items-center text-sm">
@@ -597,14 +654,30 @@
           </div>
         </div>
 
-        <div class="text-[10px] text-slate-400 italic text-center">
+        <!-- Tanda Tangan & Stempel Resmi Kasir -->
+        <div class="flex justify-between items-end pt-3 border-t border-slate-200 text-[11px] text-slate-600">
+          <div>
+            <div class="inline-block border-2 border-emerald-600 text-emerald-700 font-bold px-2.5 py-0.5 rounded rotate-[-4deg] text-[10px] uppercase">
+              TERVERIFIKASI LUNAS
+            </div>
+            <p class="text-[9px] text-slate-400 mt-1">Sistem Keuangan: <span class="font-mono">KLINIKITA-CLOUD-BILLING</span></p>
+          </div>
+          <div class="text-center">
+            <p>Petugas Kasir & Billing</p>
+            <div class="h-10"></div>
+            <p class="font-bold underline text-slate-800">Klinikita Cashier Office</p>
+          </div>
+        </div>
+
+        <div class="text-[10px] text-slate-400 italic text-center pt-1">
           *Kwitansi ini sah dan diterbitkan otomatis oleh Klinikita Cloud Management System.
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-3 pt-6 border-t border-slate-100 mt-5">
-        <button onclick="window.print()" class="py-2.5 rounded-xl bg-steelblue hover:bg-slate-800 text-white font-bold text-xs transition flex items-center justify-center gap-2">
-          <i class="fas fa-print"></i> Cetak Kwitansi
+      <!-- Action Buttons Modal (Disembunyikan saat mencetak) -->
+      <div class="modal-action-buttons grid grid-cols-2 gap-3 pt-6 border-t border-slate-100 mt-5">
+        <button onclick="printSingleInvoice()" class="py-2.5 rounded-xl bg-steelblue hover:bg-slate-800 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-sm">
+          <i class="fas fa-print"></i> Cetak Kwitansi Ini
         </button>
         <button onclick="closeInvoiceModal()" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
           Tutup
@@ -1062,9 +1135,14 @@
             </div>
           </td>
           <td class="py-3 px-4 text-center no-print">
-            <button onclick="viewInvoiceDetail('${t.id}')" title="Lihat Kwitansi" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-medical-blue hover:text-white text-slate-600 text-xs font-bold transition flex items-center gap-1 mx-auto">
-              <i class="fas fa-file-lines text-xs"></i> Kwitansi
-            </button>
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="viewInvoiceDetail('${t.id}')" title="Lihat Rincian Kwitansi" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1">
+                <i class="fas fa-file-lines text-xs"></i> Rincian
+              </button>
+              <button onclick="cetakKwitansiLangsung('${t.id}')" title="Cetak Kwitansi Transaksi Ini Saja" class="px-2.5 py-1.5 rounded-lg bg-medical-blue hover:bg-sky-600 text-white text-xs font-bold transition flex items-center gap-1 shadow-sm">
+                <i class="fas fa-print text-xs"></i> Cetak
+              </button>
+            </div>
           </td>
         `;
         tbody.appendChild(tr);
@@ -1089,6 +1167,7 @@
     // MODAL DETAIL INVOICE & KWITANSI
     // =========================================================================
     function viewInvoiceDetail(id) {
+      document.body.classList.remove('print-receipt-mode');
       const transactions = KlinikitaStore.getTransactions();
       const tx = transactions.find(t => t.id === id);
       if (!tx) return;
@@ -1106,8 +1185,33 @@
     }
 
     function closeInvoiceModal() {
+      document.body.classList.remove('print-receipt-mode');
       document.getElementById('invoice-modal')?.classList.add('hidden');
     }
+
+    // CETAK KWITANSI TRANSAKSI TERPILIH SAJA (SINGLE RECEIPT)
+    function printSingleInvoice() {
+      document.body.classList.add('print-receipt-mode');
+      window.print();
+    }
+
+    // CETAK KWITANSI LANGSUNG DARI BARIS TABEL
+    function cetakKwitansiLangsung(id) {
+      viewInvoiceDetail(id);
+      setTimeout(() => {
+        printSingleInvoice();
+      }, 150);
+    }
+
+    // CETAK LAPORAN REKAPITULASI KESELURUHAN (DEFAULT REPORT)
+    function printReport() {
+      document.body.classList.remove('print-receipt-mode');
+      window.print();
+    }
+
+    window.addEventListener('afterprint', () => {
+      document.body.classList.remove('print-receipt-mode');
+    });
 
     // =========================================================================
     // FITUR EKSPOR CSV (CLIENT-SIDE BLOB DENGAN BOM EXCEL)
@@ -1154,13 +1258,6 @@
         text: `File laporan transaksi (laporan-transaksi-klinikita-${dateStamp}.csv) telah diunduh.`,
         confirmButtonColor: '#059669'
       });
-    }
-
-    // =========================================================================
-    // FITUR CETAK LAPORAN RESMI
-    // =========================================================================
-    function printReport() {
-      window.print();
     }
 
     // =========================================================================
