@@ -86,19 +86,118 @@
           radial-gradient(circle at 0 50%, transparent 12px, white 13px),
           radial-gradient(circle at 100% 50%, transparent 12px, white 13px);
       }
+      /* ========================================================================= */
+      /* PRINT OPTIMIZATION STYLES (KLINIKITA HEALTH PASS & ESTIMASI BIAYA)        */
+      /* ========================================================================= */
       @media print {
-        body * {
-          visibility: hidden;
+        body {
+          background: white !important;
+          color: #0f172a !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
         }
-        #printable-ticket,
-        #printable-ticket * {
-          visibility: visible;
+
+        /* Sembunyikan elemen-elemen halaman umum yang tidak diperlukan saat mencetak */
+        header,
+        footer,
+        nav,
+        #top-strip,
+        #hero-banner,
+        #feature-tabs-nav,
+        #login-modal,
+        #kiosk-modal,
+        #access-guard,
+        .no-print,
+        .swal2-container {
+          display: none !important;
         }
-        #printable-ticket {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
+
+        /* ----------------------------------------------------------------------- */
+        /* MODE 1: CETAK TIKET ANTREAN PASIEN (Default/Single Ticket Mode)         */
+        /* ----------------------------------------------------------------------- */
+        body:not(.print-estimate-mode) main {
+          display: block !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        body:not(.print-estimate-mode) #estimate-modal,
+        body:not(.print-estimate-mode) #tab-content-jadwal,
+        body:not(.print-estimate-mode) #tab-content-kalkulator,
+        body:not(.print-estimate-mode) #tab-content-antrean,
+        body:not(.print-estimate-mode) #pendaftaran-module-header,
+        body:not(.print-estimate-mode) #patient-registration-col,
+        body:not(.print-estimate-mode) #ticket-instructions,
+        body:not(.print-estimate-mode) #ticket-action-buttons {
+          display: none !important;
+        }
+
+        body:not(.print-estimate-mode) #tab-content-pendaftaran {
+          display: block !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        body:not(.print-estimate-mode) #tab-content-pendaftaran > .grid {
+          display: block !important;
+        }
+
+        body:not(.print-estimate-mode) #tab-content-pendaftaran .lg\:col-span-5 {
+          display: block !important;
+          width: 100% !important;
+          max-width: 440px !important;
+          margin: 20px auto !important;
+        }
+
+        body:not(.print-estimate-mode) #virtual-ticket-container {
+          display: block !important;
+          box-shadow: none !important;
+          border: 2px dashed #0284c7 !important;
+          border-radius: 20px !important;
+          margin: 0 auto !important;
+          background: white !important;
+          page-break-inside: avoid !important;
+        }
+
+        body:not(.print-estimate-mode) #ticket-print-footer {
+          display: block !important;
+        }
+
+        /* ----------------------------------------------------------------------- */
+        /* MODE 2: CETAK LEMBAR ESTIMASI BIAYA MEDIS                               */
+        /* ----------------------------------------------------------------------- */
+        body.print-estimate-mode main,
+        body.print-estimate-mode #virtual-ticket-container {
+          display: none !important;
+        }
+
+        body.print-estimate-mode #estimate-modal {
+          display: block !important;
+          position: static !important;
+          background: transparent !important;
+          backdrop-filter: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          width: 100% !important;
+        }
+
+        body.print-estimate-mode #estimate-modal > div {
+          max-width: 640px !important;
+          margin: 20px auto !important;
+          box-shadow: none !important;
+          border: 2px solid #1e293b !important;
+          border-radius: 16px !important;
+          padding: 24px !important;
+          background: white !important;
+        }
+
+        body.print-estimate-mode #estimate-modal button,
+        body.print-estimate-mode .modal-close-btn,
+        body.print-estimate-mode #modal-estimate-actions {
+          display: none !important;
         }
       }
     </style>
@@ -301,7 +400,8 @@
 
     <!-- PAGE HERO BANNER -->
     <section
-      class="bg-gradient-to-r from-steelblue via-steelblue-dark to-medical-blue text-white py-12 border-b border-slate-800"
+      id="hero-banner"
+      class="no-print bg-gradient-to-r from-steelblue via-steelblue-dark to-medical-blue text-white py-12 border-b border-slate-800"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
@@ -338,7 +438,8 @@
 
     <!-- TAB NAVIGATION FITUR INTERAKTIF -->
     <section
-      class="sticky top-20 z-30 bg-white border-b border-slate-200 shadow-sm"
+      id="feature-tabs-nav"
+      class="no-print sticky top-20 z-30 bg-white border-b border-slate-200 shadow-sm"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center overflow-x-auto no-scrollbar gap-2 py-3">
@@ -393,7 +494,8 @@
       <div id="tab-content-pendaftaran" class="tab-panel space-y-8">
         <!-- Header Modul 1 -->
         <div
-          class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6"
+          id="pendaftaran-module-header"
+          class="no-print bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6"
         >
           <div>
             <span
@@ -427,7 +529,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <!-- Kolom Kiri: Form Registrasi -->
           <div
-            class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm"
+            id="patient-registration-col"
+            class="no-print lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm"
           >
             <div
               class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6"
@@ -678,6 +781,9 @@
                 >
                   TIKET ANTREAN RESMI POLIKLINIK
                 </p>
+                <p class="text-[9px] text-sky-200 mt-0.5">
+                  Jl. Kesehatan Raya No. 108, Jaksel • Telp: (021) 500-555
+                </p>
               </div>
 
               <div class="p-6 text-center space-y-4" id="ticket-body">
@@ -761,12 +867,24 @@
                   </div>
                 </div>
 
+                <!-- Catatan Print Footer (Khusus saat dicetak) -->
+                <div id="ticket-print-footer" class="hidden text-left bg-slate-50 p-3 rounded-xl border border-slate-200 text-[10px] text-slate-500 space-y-1">
+                  <p class="font-bold text-slate-700 flex items-center gap-1">
+                    <i class="fas fa-circle-info text-medical-blue"></i> Petunjuk Kunjungan:
+                  </p>
+                  <p>• Harap hadir di ruang tunggu poliklinik 15 menit sebelum estimasi waktu panggilan.</p>
+                  <p>• Tunjukkan struk fisik/digital ini ke perawat atau petugas administrasi poli.</p>
+                  <p class="text-[9px] text-slate-400 italic pt-1 border-t border-slate-200">
+                    Sistem Layanan Mandiri Terpadu Cloud Klinikita • Waktu Cetak: <span id="ticket-print-time">-</span>
+                  </p>
+                </div>
+
                 <!-- Action Cetak Tiket -->
-                <div class="grid grid-cols-2 gap-2 pt-2">
+                <div id="ticket-action-buttons" class="grid grid-cols-2 gap-2 pt-2 no-print">
                   <button
                     type="button"
-                    onclick="window.print()"
-                    class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-1.5"
+                    onclick="cetakTiketAntrean()"
+                    class="py-2.5 px-3 rounded-xl bg-steelblue hover:bg-slate-800 text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm"
                   >
                     <i class="fas fa-print"></i> Cetak Tiket
                   </button>
@@ -783,7 +901,8 @@
 
             <!-- Petunjuk Pasien -->
             <div
-              class="bg-sky-50/70 p-5 rounded-2xl border border-sky-100 text-xs text-slate-600 space-y-2"
+              id="ticket-instructions"
+              class="no-print bg-sky-50/70 p-5 rounded-2xl border border-sky-100 text-xs text-slate-600 space-y-2"
             >
               <h4 class="font-bold text-steelblue flex items-center gap-1.5">
                 <i class="fas fa-clipboard-check text-medical-blue"></i>
@@ -1445,7 +1564,7 @@
       >
         <button
           onclick="tutupModalEstimasi()"
-          class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-lg"
+          class="modal-close-btn no-print absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-lg"
         >
           <i class="fas fa-times"></i>
         </button>
@@ -1605,9 +1724,9 @@
         </div>
 
         <!-- Action Buttons Modal -->
-        <div class="grid grid-cols-2 gap-3 pt-6 border-t border-slate-100 mt-4">
+        <div id="modal-estimate-actions" class="grid grid-cols-2 gap-3 pt-6 border-t border-slate-100 mt-4 no-print">
           <button
-            onclick="window.print()"
+            onclick="cetakLembarEstimasi()"
             class="py-2.5 rounded-xl bg-steelblue hover:bg-slate-800 text-white font-bold text-xs transition flex items-center justify-center gap-2"
           >
             <i class="fas fa-print"></i> Cetak / Simpan PDF
@@ -2537,10 +2656,68 @@
             <p class="text-emerald-600 font-semibold mt-2"><i class="fas fa-check-double mr-1"></i> Data telah disinkronkan ke server cloud Klinikita.</p>
           </div>
         `,
-          confirmButtonText: "Lihat Tiket",
+          showCancelButton: true,
+          confirmButtonText: '<i class="fas fa-print mr-1.5"></i> Cetak Tiket Sekarang',
           confirmButtonColor: "#0284c7",
+          cancelButtonText: 'Lihat Tiket di Layar',
+          cancelButtonColor: '#64748b',
+        }).then((result) => {
+          const ticketContainer = document.getElementById("virtual-ticket-container");
+          if (ticketContainer) {
+            ticketContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          if (result.isConfirmed) {
+            cetakTiketAntrean();
+          }
         });
       }
+
+      // =========================================================================
+      // FUNGSI KHUSUS CETAK TIKET ANTREAN & ESTIMASI BIAYA
+      // =========================================================================
+      function cetakTiketAntrean() {
+        const printTime = document.getElementById("ticket-print-time");
+        if (printTime) {
+          printTime.innerText = new Date().toLocaleString("id-ID", {
+            dateStyle: "medium",
+            timeStyle: "short",
+          }) + " WIB";
+        }
+        document.body.classList.add("print-ticket-mode");
+        document.body.classList.remove("print-estimate-mode");
+        window.print();
+      }
+
+      function cetakLembarEstimasi() {
+        document.body.classList.add("print-estimate-mode");
+        document.body.classList.remove("print-ticket-mode");
+        window.print();
+      }
+
+      // Event listener beforeprint & afterprint untuk menjamin kompatibilitas Ctrl+P
+      window.addEventListener("beforeprint", () => {
+        const estModal = document.getElementById("estimate-modal");
+        const isEstOpen = estModal && !estModal.classList.contains("hidden");
+        if (isEstOpen) {
+          document.body.classList.add("print-estimate-mode");
+          document.body.classList.remove("print-ticket-mode");
+        } else {
+          const printTime = document.getElementById("ticket-print-time");
+          if (printTime) {
+            printTime.innerText = new Date().toLocaleString("id-ID", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            }) + " WIB";
+          }
+          document.body.classList.add("print-ticket-mode");
+          document.body.classList.remove("print-estimate-mode");
+        }
+      });
+
+      window.addEventListener("afterprint", () => {
+        document.body.classList.remove("print-ticket-mode");
+        document.body.classList.remove("print-estimate-mode");
+      });
 
       // =========================================================================
       // MODUL 2: JADWAL DOKTER LOGIC
@@ -3140,6 +3317,16 @@
           tanggal: new Date().toISOString().split("T")[0],
         });
 
+        // Sinkronisasi ke Virtual Ticket Preview
+        if (document.getElementById("ticket-number")) document.getElementById("ticket-number").innerText = noAntrean;
+        if (document.getElementById("ticket-patient-name")) document.getElementById("ticket-patient-name").innerText = nama;
+        if (document.getElementById("ticket-poli")) document.getElementById("ticket-poli").innerText = poli;
+        if (document.getElementById("ticket-doctor")) document.getElementById("ticket-doctor").innerText = dokter;
+        if (document.getElementById("ticket-time")) document.getElementById("ticket-time").innerText = `${new Date().toLocaleDateString("id-ID")} • Estimasi ~${nowWaktu} WIB`;
+        if (document.getElementById("ticket-insurance")) document.getElementById("ticket-insurance").innerText = penjamin;
+        if (document.getElementById("ticket-id-display")) document.getElementById("ticket-id-display").innerText = `KLNK-2026-${noAntrean.replace("-", "")}`;
+        if (document.getElementById("ticket-status-badge")) document.getElementById("ticket-status-badge").innerHTML = '<i class="fas fa-circle-check mr-1"></i> Dicetak dari Kiosk Mandiri';
+
         tutupKioskPasien();
         document.getElementById("kiosk-form").reset();
         renderWaitingQueueTable();
@@ -3158,8 +3345,15 @@
             <div class="pt-2 text-[10px] text-slate-400 font-mono tracking-widest">||| | ||||| || |||| ||| ||||</div>
           </div>
         `,
+          showCancelButton: true,
           confirmButtonColor: "#059669",
-          confirmButtonText: "Ambil Tiket",
+          confirmButtonText: '<i class="fas fa-print mr-1"></i> Cetak Struk Fisik',
+          cancelButtonText: "Selesai",
+          cancelButtonColor: "#64748b",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            cetakTiketAntrean();
+          }
         });
       }
 
